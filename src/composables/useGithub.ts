@@ -1,10 +1,9 @@
 export function useGithub () {
   const config = useRuntimeConfig();
-  const username = config.public.githubUser;
   const token = config.public.githubToken;
   const headers: HeadersInit = token ? { Authorization: `token ${token}` } : {};
 
-  async function getRepositories() {
+  async function getRepositories(username: string) {
     const { data: repos, error } = await useFetch(`https://api.github.com/users/${username}/repos`, { headers });
 
     if (!repos.value) return [];
@@ -13,6 +12,7 @@ export function useGithub () {
       return {
         name: repo.name,
         link: repo.html_url,
+        language: repo.language,
         created_at: repo.created_at,
         updated_at: repo.updated_at,
       };
