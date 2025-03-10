@@ -1,15 +1,15 @@
-version: "3"
-
 networks:
     my-app-network:
 
 volumes:
   node_modules:
 services:
-  my-app-dev:
+  frontend-dev:
     build:
       context: .
       dockerfile: ./Dockerfile.dev
+    env_file:
+      - ./.env
     ports:
       - "3000:3000"
       - "24678:24678"
